@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Responses;
+namespace SoftInvest\Http\Responses;
 
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;

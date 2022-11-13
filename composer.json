@@ -16,7 +16,8 @@
   },
   "autoload": {
     "psr-4": {
-      "SoftInvest\\Http\\Responses": "src"
+      "SoftInvest\\Http\\Responses\\": "src",
+      "SoftInvest\\Http\\Controllers\\": "src\\Controllers"
     }
   }
 }

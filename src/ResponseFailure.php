@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Responses;
+namespace SoftInvest\Http\Responses;
 
-use App\Http\Responses\Traits\TAsJsonStandard;
+use SoftInvest\Http\Responses\Traits\TAsJsonStandard;
 use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 use Throwable;
