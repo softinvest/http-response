@@ -1,0 +1,22 @@
+{
+  "name": "softinvest/http-response",
+  "description": "HttpResponse Wrapper",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "softinvest",
+      "email": "c@bragin.su"
+    }
+  ],
+  "keywords": [
+    "http response wrapper"
+  ],
+  "require": {
+    "php": ">=8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "SoftInvest\\Http\\Responses": "src"
+    }
+  }
+}
