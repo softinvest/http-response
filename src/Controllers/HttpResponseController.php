@@ -2,7 +2,6 @@
 
 namespace SoftInvest\Http\Controllers;
 
-use App\DTO\self;
 use SoftInvest\Http\Responses\AbstractResponse;
 use SoftInvest\Http\Responses\ResponseFailure;
 use SoftInvest\Http\Responses\ResponseSuccess;
