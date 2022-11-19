@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
 
 class ResponseOk extends AbstractResponse
 {
-    protected bool $success = true;
+    protected ?bool $success = true;
     protected $status = HttpFoundationResponse::HTTP_OK;
 
     /**

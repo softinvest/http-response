@@ -13,7 +13,7 @@ class ResponseFailure extends AbstractResponse
 {
     use TAsJsonStandard;
 
-    protected bool $success = false;
+    protected ?bool $success = false;
     protected $status = HttpFoundationResponse::HTTP_BAD_REQUEST;
 
     public function __construct(string $error = '', int $status = HttpFoundationResponse::HTTP_BAD_REQUEST, mixed $data = null)

@@ -11,7 +11,7 @@ class ResponseSuccess extends AbstractResponse
 {
     use TAsJsonStandard;
 
-    protected bool $success = true;
+    protected ?bool $success = true;
     protected $status = HttpFoundationResponse::HTTP_OK;
 
 }

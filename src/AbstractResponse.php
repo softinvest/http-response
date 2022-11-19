@@ -12,12 +12,12 @@ abstract class AbstractResponse
     /**
      * @var string
      */
-    protected string $error = '';
+    protected ?string $error = '';
 
     /**
      * @var bool
      */
-    protected bool $success = false;
+    protected ?bool $success = false;
 
     /**
      * @var int
