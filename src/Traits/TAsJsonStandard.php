@@ -15,7 +15,10 @@ trait TAsJsonStandard
             [
                 'error' => $this->error,
                 'success' => $this->success,
-                'data' => $this->data
+                'data' => (is_object($this->data) && method_exists($this->data,'toArray'))
+                    ?
+                    $this->data->toArray()
+                    : $this->data
             ], $this->status
         );
     }
