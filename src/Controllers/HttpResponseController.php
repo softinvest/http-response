@@ -12,6 +12,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Response as HttpFoundationResponse;
+use Throwable;
 
 
 class HttpResponseController extends BaseController
@@ -64,8 +65,31 @@ class HttpResponseController extends BaseController
     {
         try {
             $result = $callback();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return (new ResponseFailure())
+                ->fromException(exception: $e, hasTrace: $this->hasTrace)
+                ->setStatus(status: HttpFoundationResponse::HTTP_BAD_REQUEST)
+                ->asJSON();
+        }
+        return (new $successResponseCassName)
+            ->setData(data: $result)
+            ->asJSON();
+    }
+
+    public function responseWithResource(
+        string $resourceClassName,
+        callable $callback,
+        string $successResponseCassName = ResponseSuccess::class,
+        string $failureResponseCassName = ResponseFailure::class
+    ): JsonResponse {
+        try {
+            $result = (static function() use ($callback, $resourceClassName) {
+                $result = $callback();
+
+                return $resourceClassName::make($result);
+            })();
+        } catch (Throwable $e) {
+            return (new $failureResponseCassName())
                 ->fromException(exception: $e, hasTrace: $this->hasTrace)
                 ->setStatus(status: HttpFoundationResponse::HTTP_BAD_REQUEST)
                 ->asJSON();
