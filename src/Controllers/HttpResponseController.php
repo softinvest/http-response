@@ -99,6 +99,29 @@ class HttpResponseController extends BaseController
             ->asJSON();
     }
 
+    public function responseWithResourceCollection(
+        string $resourceClassName,
+        callable $callback,
+        string $successResponseCassName = ResponseSuccess::class,
+        string $failureResponseCassName = ResponseFailure::class
+    ): JsonResponse {
+        try {
+            $result = (static function() use ($callback, $resourceClassName) {
+                $result = $callback();
+
+                return $resourceClassName::collection($result);
+            })();
+        } catch (Throwable $e) {
+            return (new $failureResponseCassName())
+                ->fromException(exception: $e, hasTrace: $this->hasTrace)
+                ->setStatus(status: HttpFoundationResponse::HTTP_BAD_REQUEST)
+                ->asJSON();
+        }
+        return (new $successResponseCassName)
+            ->setData(data: $result)
+            ->asJSON();
+    }
+
     /**
      * @return ?string
      */
