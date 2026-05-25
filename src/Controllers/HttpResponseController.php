@@ -41,7 +41,7 @@ class HttpResponseController extends BaseController
 
     /**
      * @param AbstractResponse $response
-     * @param int              $responseFormatType
+     * @param int $responseFormatType
      *
      * @return Response|JsonResponse|null
      */
@@ -57,18 +57,21 @@ class HttpResponseController extends BaseController
 
     /**
      * @param callable $callback
-     * @param bool     $hasTrace
+     * @param string $successResponseCassName
+     * @param string $failureResponseCassName
      *
      * @return JsonResponse
      */
-    public function response(callable $callback, string $successResponseCassName = ResponseSuccess::class): JsonResponse
-    {
+    public function response(
+        callable $callback,
+        string $successResponseCassName = ResponseSuccess::class,
+        string $failureResponseCassName = ResponseFailure::class
+    ): JsonResponse {
         try {
             $result = $callback();
         } catch (Throwable $e) {
-            return (new ResponseFailure())
+            return (new $failureResponseCassName())
                 ->fromException(exception: $e, hasTrace: $this->hasTrace)
-                ->setStatus(status: HttpFoundationResponse::HTTP_BAD_REQUEST)
                 ->asJSON();
         }
         return (new $successResponseCassName)
@@ -91,7 +94,6 @@ class HttpResponseController extends BaseController
         } catch (Throwable $e) {
             return (new $failureResponseCassName())
                 ->fromException(exception: $e, hasTrace: $this->hasTrace)
-                ->setStatus(status: HttpFoundationResponse::HTTP_BAD_REQUEST)
                 ->asJSON();
         }
         return (new $successResponseCassName)
@@ -114,7 +116,6 @@ class HttpResponseController extends BaseController
         } catch (Throwable $e) {
             return (new $failureResponseCassName())
                 ->fromException(exception: $e, hasTrace: $this->hasTrace)
-                ->setStatus(status: HttpFoundationResponse::HTTP_BAD_REQUEST)
                 ->asJSON();
         }
         return (new $successResponseCassName)
